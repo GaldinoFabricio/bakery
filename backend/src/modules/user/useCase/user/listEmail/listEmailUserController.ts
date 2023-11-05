@@ -3,15 +3,15 @@ import { container } from "tsyringe";
 import { ListEmailUserUseCase } from "./listEmailUserUseCase";
 
 class ListEmailUserController {
-  async handle(request: Request, response: Response): Promise<Response> {
-    const { email } = request.body;
+	async handle(request: Request, response: Response): Promise<Response> {
+		const { email } = request.body;
 
-    const listEmailUserUseCase = container.resolve(ListEmailUserUseCase);
+		const listEmailUserUseCase = container.resolve(ListEmailUserUseCase);
 
-    const data = await listEmailUserUseCase.execute({ email });
+		const data = await listEmailUserUseCase.execute({ email });
 
-    return response.status(200).send(data);
-  }
+		return response.status(200).send(data);
+	}
 }
 
-export { ListEmailUserController }
+export { ListEmailUserController };
