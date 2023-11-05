@@ -3,6 +3,7 @@
 backend/.env
 backend/node_modules
 backend/prisma/migrations
+backend/.editorconfig
 
 # dependencies
 frontend/node_modules

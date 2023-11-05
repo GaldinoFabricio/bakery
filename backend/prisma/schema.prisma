@@ -1,47 +1,68 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["interactiveTransactions"]
+   provider        = "prisma-client-js"
+   previewFeatures = ["interactiveTransactions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+   provider = "postgresql"
+   url      = env("DATABASE_URL")
 }
 
 model User {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name       String
-  email      String   @unique
-  password   String
-  is_adm     Boolean  @default(false)
-  created_at DateTime @default(now())
-  cart       Cart[]
+   id         String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+   name       String
+   email      String      @unique
+   password   String
+   is_adm     Boolean     @default(false)
+   created_at DateTime    @default(now())
+   cart       Cart[]
+   GroupRole  GroupLevel?
 
-  @@map("users")
+   @@map("users")
 }
 
 model Product {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String   @db.VarChar(25)
-  description String   @db.VarChar(300)
-  value       Decimal  @db.Decimal(3, 2)
-  amount      Int      @db.Integer
-  created_at  DateTime @default(now())
-  updated_at  DateTime @default(now()) @updatedAt
-  cart        Cart[]
+   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+   name        String   @db.VarChar(25)
+   description String   @db.VarChar(300)
+   value       Decimal  @db.Decimal(3, 2)
+   amount      Int      @db.Integer
+   created_at  DateTime @default(now())
+   updated_at  DateTime @default(now()) @updatedAt
+   cart        Cart[]
 
-  @@map("products")
+   @@map("products")
 }
 
 model Cart {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  product_id String   @db.Uuid
-  user_id    String   @db.Uuid
-  subTotal   Decimal  @db.Decimal(5, 2)
-  amount     Int      @db.Integer
-  created_at DateTime @default(now())
-  product    Product  @relation(fields: [product_id], references: [id])
-  user       User     @relation(fields: [user_id], references: [id])
+   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+   product_id String   @db.Uuid
+   user_id    String   @db.Uuid
+   subTotal   Decimal  @db.Decimal(5, 2)
+   amount     Int      @db.Integer
+   created_at DateTime @default(now())
+   product    Product  @relation(fields: [product_id], references: [id])
+   user       User     @relation(fields: [user_id], references: [id])
 
-  @@map("carts")
+   @@map("carts")
+}
+
+model Level {
+   id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+   name       String
+   created_at DateTime     @default(now())
+   GroupRole  GroupLevel[]
+
+   @@map("levels")
+}
+
+model GroupLevel {
+   id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+   level_id   String   @db.Uuid
+   user_id    String   @unique @db.Uuid
+   created_at DateTime @default(now())
+   level      Level    @relation(fields: [level_id], references: [id])
+   user       User?    @relation(fields: [user_id], references: [id])
+
+   @@map("group_levels")
 }
