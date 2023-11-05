@@ -1,7 +1,6 @@
 import { Router } from "express";
 
 import { isAdm } from "../../middleware/isAdm";
-import { permissionUser } from "../../middleware/permissionUser";
 import { CreateUserController } from "../../modules/user/useCase/user/create/createUserController";
 import { ListUserController } from "../../modules/user/useCase/user/list/listUserController";
 import { ListEmailUserController } from "../../modules/user/useCase/user/listEmail/listEmailUserController";
@@ -20,12 +19,7 @@ const updateUserController = new UpdateUserController();
 
 userRoutes.post("/", createUserController.handle);
 
-userRoutes.get(
-  "/", 
-  isAdm,
-  permissionUser,
-  listUserController.handle
-);
+userRoutes.get("/", isAdm, listUserController.handle);
 
 userRoutes.get("/email", listEmailUserController.handle);
 
@@ -35,4 +29,4 @@ userRoutes.get("/name/:name", listNameUserController.handle);
 
 userRoutes.put("/", updateUserController.handle);
 
-export { userRoutes }
+export { userRoutes };

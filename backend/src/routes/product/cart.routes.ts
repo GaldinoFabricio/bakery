@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { isAdm } from "../../middleware/isAdm";
-import { permissionUser } from "../../middleware/permissionUser";
 
 import { CreateCartController } from "../../modules/product/useCase/cart/create/createCartController";
 import { ListCartController } from "../../modules/product/useCase/cart/list/listCartController";
@@ -16,15 +15,10 @@ const listUserIdController = new ListUserIdCartController();
 
 cartRoutes.post("/create", createCartController.handle);
 
-cartRoutes.get(
-  "/",
-  isAdm,
-  permissionUser,
-  listCartController.handle
-);
+cartRoutes.get("/", isAdm, listCartController.handle);
 
 cartRoutes.get("/id/:id", listIdCartController.handle);
 
 cartRoutes.get("/userId/:user_id", listUserIdController.handle);
 
-export { cartRoutes }
+export { cartRoutes };
