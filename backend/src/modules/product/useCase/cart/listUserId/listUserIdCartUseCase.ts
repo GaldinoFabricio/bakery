@@ -6,20 +6,20 @@ import { ICartRepository } from "../../../repository/ICartRepository";
 
 @injectable()
 class ListUserIdCartUseCase {
-  constructor(
-    @inject("CartRepository")
-    private cartRepository: ICartRepository
-  ){}
+	constructor(
+		@inject("CartRepository")
+		private cartRepository: ICartRepository
+	) {}
 
-  async execute({user_id}: IListUserIdCartDTO): Promise<Cart[]> {
-    if (!user_id) {
-      throw new AppError("User not informed", 400);
-    }
+	async execute({ user_id }: IListUserIdCartDTO): Promise<Cart | null> {
+		if (!user_id) {
+			throw new AppError("User not informed", 400);
+		}
 
-    const data = await this.cartRepository.listUserId({user_id});
+		const data = await this.cartRepository.listUserId({ user_id });
 
-    return data;
-  }
+		return data;
+	}
 }
 
-export { ListUserIdCartUseCase }
+export { ListUserIdCartUseCase };

@@ -10,7 +10,7 @@ interface ICartRepository {
 
 	listId({ id }: IListIdCartDTO): Promise<Cart | null>;
 
-	listUserId({ user_id }: IListUserIdCartDTO): Promise<Cart[]>;
+	listUserId({ user_id }: IListUserIdCartDTO): Promise<Cart | null>;
 }
 
 export { ICartRepository };

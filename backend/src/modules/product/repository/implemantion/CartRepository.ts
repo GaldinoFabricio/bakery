@@ -6,19 +6,13 @@ import { IListUserIdCartDTO } from "../../dto/cart/IListUserIdCartDTO";
 import { ICartRepository } from "../ICartRepository";
 
 class CartRepository implements ICartRepository {
-	private repository;
-
-	constructor() {
-		this.repository = prismaClient.cart;
-	}
-
 	async create({
 		amount,
 		product_id,
 		subTotal,
 		user_id,
 	}: ICreateCartDTO): Promise<void> {
-		await this.repository.create({
+		await prismaClient.cart.create({
 			data: {
 				amount,
 				subTotal,
@@ -29,29 +23,23 @@ class CartRepository implements ICartRepository {
 	}
 
 	async list(): Promise<Cart[]> {
-		const data = await this.repository.findMany();
-
-		return data;
+		return await prismaClient.cart.findMany();
 	}
 
 	async listId({ id }: IListIdCartDTO): Promise<Cart | null> {
-		const data = await this.repository.findFirst({
+		return await prismaClient.cart.findFirst({
 			where: {
 				id,
 			},
 		});
-
-		return data;
 	}
 
-	async listUserId({ user_id }: IListUserIdCartDTO): Promise<Cart[]> {
-		const data = await this.repository.findMany({
+	async listUserId({ user_id }: IListUserIdCartDTO): Promise<Cart | null> {
+		return await prismaClient.cart.findFirst({
 			where: {
 				user_id,
 			},
 		});
-
-		return data;
 	}
 }
 
