@@ -4,7 +4,7 @@ import { productRoutes } from "./products.routes";
 
 const indexProduct = Router();
 
+indexProduct.use("/cart", cartRoutes);
 indexProduct.use(productRoutes);
-indexProduct.use(cartRoutes);
 
 export { indexProduct };

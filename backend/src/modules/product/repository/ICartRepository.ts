@@ -4,13 +4,13 @@ import { IListIdCartDTO } from "../dto/cart/IListIdCartDTO";
 import { IListUserIdCartDTO } from "../dto/cart/IListUserIdCartDTO";
 
 interface ICartRepository {
-  create(data: ICreateCartDTO): Promise<void>;
+	create(data: ICreateCartDTO): Promise<void>;
 
-  list(): Promise<Cart[]>;
+	list(): Promise<Cart[]>;
 
-  listId({ id }: IListIdCartDTO): Promise<Cart | null>;
+	listId({ id }: IListIdCartDTO): Promise<Cart | null>;
 
-  listUserId({ user_id }: IListUserIdCartDTO): Promise<Cart[]>;
+	listUserId({ user_id }: IListUserIdCartDTO): Promise<Cart[]>;
 }
 
-export { ICartRepository }
+export { ICartRepository };

@@ -6,48 +6,53 @@ import { IListUserIdCartDTO } from "../../dto/cart/IListUserIdCartDTO";
 import { ICartRepository } from "../ICartRepository";
 
 class CartRepository implements ICartRepository {
-  private repository;
+	private repository;
 
-  constructor() {
-    this.repository = prismaClient.cart;
-  }
+	constructor() {
+		this.repository = prismaClient.cart;
+	}
 
-  async create({amount,product_id,subTotal,user_id}: ICreateCartDTO): Promise<void> {
-    await this.repository.create({
-      data: {
-        amount,
-        subTotal,
-        product_id,
-        user_id,
-      },
-    });
-  }
+	async create({
+		amount,
+		product_id,
+		subTotal,
+		user_id,
+	}: ICreateCartDTO): Promise<void> {
+		await this.repository.create({
+			data: {
+				amount,
+				subTotal,
+				product_id,
+				user_id,
+			},
+		});
+	}
 
-  async list(): Promise<Cart[]> {
-    const data = await this.repository.findMany();
+	async list(): Promise<Cart[]> {
+		const data = await this.repository.findMany();
 
-    return data;
-  }
+		return data;
+	}
 
-  async listId({ id }: IListIdCartDTO): Promise<Cart | null> {
-    const data = await this.repository.findFirst({
-      where: {
-        id,
-      },
-    });
+	async listId({ id }: IListIdCartDTO): Promise<Cart | null> {
+		const data = await this.repository.findFirst({
+			where: {
+				id,
+			},
+		});
 
-    return data;
-  }
+		return data;
+	}
 
-  async listUserId({ user_id }: IListUserIdCartDTO): Promise<Cart[]> {
-    const data = await this.repository.findMany({
-      where: {
-        user_id,
-      },
-    });
+	async listUserId({ user_id }: IListUserIdCartDTO): Promise<Cart[]> {
+		const data = await this.repository.findMany({
+			where: {
+				user_id,
+			},
+		});
 
-    return data;
-  }
+		return data;
+	}
 }
 
-export { CartRepository }
+export { CartRepository };
