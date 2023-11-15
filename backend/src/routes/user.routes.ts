@@ -1,14 +1,15 @@
 import { Router } from "express";
-
-import { isAdm } from "../../middleware/isAdm";
-import { ListUserController } from "../../modules/user/useCase/user/list/listUserController";
-import { ListEmailUserController } from "../../modules/user/useCase/user/listEmail/listEmailUserController";
-import { ListIdUserController } from "../../modules/user/useCase/user/listId/listIdUserController";
-import { ListNameUserController } from "../../modules/user/useCase/user/listName/listNameUserController";
-import { UpdateUserController } from "../../modules/user/useCase/user/update/updateUserController";
-import { ListMyUserController } from "../../modules/user/useCase/user/listMy/ListMyUserController";
 import { Joi, Segments, celebrate } from "celebrate";
-import { CreateUserController } from "../../modules/user/useCase/user/create/createUserController";
+
+import { isAdm } from "../middleware/isAdm";
+import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
+import { ListUserController } from "../modules/user/useCase/user/list/listUserController";
+import { ListEmailUserController } from "../modules/user/useCase/user/listEmail/listEmailUserController";
+import { ListIdUserController } from "../modules/user/useCase/user/listId/listIdUserController";
+import { ListNameUserController } from "../modules/user/useCase/user/listName/listNameUserController";
+import { UpdateUserController } from "../modules/user/useCase/user/update/updateUserController";
+import { ListMyUserController } from "../modules/user/useCase/user/listMy/ListMyUserController";
+import { CreateUserController } from "../modules/user/useCase/user/create/createUserController";
 
 const userRoutes = Router();
 
@@ -20,8 +21,11 @@ const listMyUserController = new ListMyUserController();
 const listNameUserController = new ListNameUserController();
 const updateUserController = new UpdateUserController();
 
+userRoutes.use(ensureAuthenticate);
+
 userRoutes.post(
 	"/",
+	isAdm,
 	celebrate(
 		{
 			[Segments.BODY]: Joi.object({
@@ -78,7 +82,7 @@ userRoutes.get(
 	celebrate(
 		{
 			[Segments.PARAMS]: Joi.object({
-				id: Joi.number().required(),
+				id: Joi.string().required(),
 			}),
 		},
 		{
