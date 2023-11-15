@@ -7,31 +7,31 @@ import AppError from "../../../../../shared/errors/AppErrors";
 
 @injectable()
 class CreateUserUseCase {
-  constructor(
-    @inject("UserRepository")
-    private userRepository: IUserRepository
-  ){}
+	constructor(
+		@inject("UserRepository")
+		private userRepository: IUserRepository
+	) {}
 
-  async execute({email,name,password,is_adm}:ICreateUserDTO): Promise<void> {
-    if (!email || !name || !password || !is_adm) {
-      throw new AppError("Email/Name/Password not informed", 400);
-    }
+	async execute({
+		email,
+		name,
+		password,
+		is_adm,
+	}: ICreateUserDTO): Promise<void> {
+		const data = await this.userRepository.listEmail({ email });
+		if (data) {
+			throw new AppError("User already exist", 400);
+		}
 
-    const data = await this.userRepository.listEmail({ email });
+		const passwordHash = await hash(password, 8);
 
-    if (data) {
-      throw new AppError("User already exist", 400);
-    }
-
-    const passwordHash = await hash(password, 8)
-
-    await this.userRepository.create({
-      email,
-      name,
-      password: passwordHash,
-      is_adm
-    });
-  }
+		await this.userRepository.create({
+			email,
+			name,
+			password: passwordHash,
+			is_adm,
+		});
+	}
 }
 
-export { CreateUserUseCase }
+export { CreateUserUseCase };

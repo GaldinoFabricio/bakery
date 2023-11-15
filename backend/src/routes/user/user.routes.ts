@@ -1,7 +1,6 @@
 import { Router } from "express";
 
 import { isAdm } from "../../middleware/isAdm";
-import { CreateUserController } from "../../modules/user/useCase/user/create/createUserController";
 import { ListUserController } from "../../modules/user/useCase/user/list/listUserController";
 import { ListEmailUserController } from "../../modules/user/useCase/user/listEmail/listEmailUserController";
 import { ListIdUserController } from "../../modules/user/useCase/user/listId/listIdUserController";
@@ -9,6 +8,7 @@ import { ListNameUserController } from "../../modules/user/useCase/user/listName
 import { UpdateUserController } from "../../modules/user/useCase/user/update/updateUserController";
 import { ListMyUserController } from "../../modules/user/useCase/user/listMy/ListMyUserController";
 import { Joi, Segments, celebrate } from "celebrate";
+import { CreateUserController } from "../../modules/user/useCase/user/create/createUserController";
 
 const userRoutes = Router();
 
