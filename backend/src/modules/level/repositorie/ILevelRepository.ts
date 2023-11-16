@@ -1,8 +1,8 @@
 import { Level } from "@prisma/client";
-import { ICreateLevelDTO } from "../dto/level/ICreateLevelDTO";
-import { IListIdLevelDTO } from "../dto/level/IListIdLevelDTO";
-import { IListNameLevelDTO } from "../dto/level/IListNameLevelDTO";
-import { IUpdateLevelDTO } from "../dto/level/IUpdateLevelDTO";
+import { ICreateLevelDTO } from "../dto/ICreateLevelDTO";
+import { IListIdLevelDTO } from "../dto/IListIdLevelDTO";
+import { IListNameLevelDTO } from "../dto/IListNameLevelDTO";
+import { IUpdateLevelDTO } from "../dto/IUpdateLevelDTO";
 
 interface ILevelRepository {
 	create(data: ICreateLevelDTO): Promise<void>;

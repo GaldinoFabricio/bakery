@@ -3,11 +3,11 @@ import { Joi, Segments, celebrate } from "celebrate";
 
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
 import { isAdm } from "../middleware/isAdm";
-import { CreateCartController } from "../modules/product/useCase/cart/create/createCartController";
-import { ListCartController } from "../modules/product/useCase/cart/list/listCartController";
-import { ListIdCartController } from "../modules/product/useCase/cart/listId/listIdCartController";
-import { ListUserIdCartController } from "../modules/product/useCase/cart/listUserId/listUserIdCartController";
-import { ListMyCartController } from "../modules/product/useCase/cart/listMy/ListMyCartController";
+import { CreateCartController } from "../modules/cart/useCase/create/createCartController";
+import { ListCartController } from "../modules/cart/useCase/list/listCartController";
+import { ListIdCartController } from "../modules/cart/useCase/listId/listIdCartController";
+import { ListMyCartController } from "../modules/cart/useCase/listMy/ListMyCartController";
+import { ListUserIdCartController } from "../modules/cart/useCase/listUserId/listUserIdCartController";
 
 const cartRoutes = Router();
 

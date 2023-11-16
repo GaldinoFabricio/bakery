@@ -2,13 +2,12 @@ import { Router } from "express";
 import { Joi, Segments, celebrate } from "celebrate";
 import { isAdm } from "../middleware/isAdm";
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
-
-import { CreateGroupLevelController } from "../modules/level/useCase/groupLevel/create/CreateGroupLevelController";
-import { ListGroupLevelController } from "../modules/level/useCase/groupLevel/list/ListGroupLevelController";
-import { ListLevelIdGroupLevelController } from "../modules/level/useCase/groupLevel/listLevelId/ListLevelIdGroupLevelController";
-import { ListUserIdGroupLevelController } from "../modules/level/useCase/groupLevel/listUserId/ListUserIdGroupLevelController";
-import { UpdateGroupLevelController } from "../modules/level/useCase/groupLevel/update/UpdateGroupLevelController";
-import { UpdateLevelGroupLevelController } from "../modules/level/useCase/groupLevel/updateLevel/UpdateLevelGroupLevelController";
+import { CreateGroupLevelController } from "../modules/group-level/useCase/create/CreateGroupLevelController";
+import { ListGroupLevelController } from "../modules/group-level/useCase/list/ListGroupLevelController";
+import { ListLevelIdGroupLevelController } from "../modules/group-level/useCase/listLevelId/ListLevelIdGroupLevelController";
+import { ListUserIdGroupLevelController } from "../modules/group-level/useCase/listUserId/ListUserIdGroupLevelController";
+import { UpdateGroupLevelController } from "../modules/group-level/useCase/update/UpdateGroupLevelController";
+import { UpdateLevelGroupLevelController } from "../modules/group-level/useCase/updateLevel/UpdateLevelGroupLevelController";
 
 const groupLevelRoutes = Router();
 

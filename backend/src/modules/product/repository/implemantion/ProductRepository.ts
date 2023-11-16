@@ -1,70 +1,81 @@
 import { Product } from "@prisma/client";
 import { prismaClient } from "../../../../database";
-import { ICreateProductDTO } from "../../dto/product/ICreateProductDTO";
-import { IListIdProductDTO } from "../../dto/product/IListIdProductDTO";
-import { IListNameProductDTO } from "../../dto/product/IListNameProductDTO";
-import { IUpdateProductDTO } from "../../dto/product/IUpdateProductDTO";
+import { ICreateProductDTO } from "../../dto/ICreateProductDTO";
+import { IListIdProductDTO } from "../../dto/IListIdProductDTO";
+import { IListNameProductDTO } from "../../dto/IListNameProductDTO";
+import { IUpdateProductDTO } from "../../dto/IUpdateProductDTO";
 import { IProductRepository } from "../IProductRepository";
 
 class ProductRepository implements IProductRepository {
-  private repository;
+	private repository;
 
-  constructor() {
-    this.repository = prismaClient.product;
-  }
+	constructor() {
+		this.repository = prismaClient.product;
+	}
 
-  async create({amount,description,name,value}: ICreateProductDTO): Promise<void> {
-    await this.repository.create({
-      data: {
-        amount,
-        description,
-        name,
-        value,
-      },
-    });
-  }
+	async create({
+		amount,
+		description,
+		name,
+		value,
+	}: ICreateProductDTO): Promise<void> {
+		await this.repository.create({
+			data: {
+				amount,
+				description,
+				name,
+				value,
+			},
+		});
+	}
 
-  async list(): Promise<Product[]> {
-    const data = await this.repository.findMany();
+	async list(): Promise<Product[]> {
+		const data = await this.repository.findMany();
 
-    return data;
-  }
+		return data;
+	}
 
-  async listId({ id }: IListIdProductDTO): Promise<Product | null> {
-    const data = await this.repository.findFirst({
-      where: {
-        id,
-      },
-    });
+	async listId({ id }: IListIdProductDTO): Promise<Product | null> {
+		const data = await this.repository.findFirst({
+			where: {
+				id,
+			},
+		});
 
-    return data;
-  }
+		return data;
+	}
 
-  async listName({ name }: IListNameProductDTO): Promise<Product | null> {
-    const data = await this.repository.findFirst({
-      where: {
-        name,
-      },
-    });
+	async listName({ name }: IListNameProductDTO): Promise<Product | null> {
+		const data = await this.repository.findFirst({
+			where: {
+				name,
+			},
+		});
 
-    return data;
-  }
+		return data;
+	}
 
-  async update({amount,description,id,name,value}: IUpdateProductDTO): Promise<Product> {
-    const data = await this.repository.update({
-      where: {
-        id,
-      },
-      data: {
-        amount,
-        name,
-        value,
-        description,
-      },
-    });
+	async update({
+		amount,
+		description,
+		id,
+		name,
+		value,
+	}: IUpdateProductDTO): Promise<Product> {
+		const data = await this.repository.update({
+			where: {
+				id,
+			},
+			data: {
+				amount,
+				name,
+				value,
+				description,
+			},
+		});
 
-    return data;
-  }
+		return data;
+	}
 }
 
-export { ProductRepository }
+export { ProductRepository };

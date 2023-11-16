@@ -3,11 +3,11 @@ import { Joi, Segments, celebrate } from "celebrate";
 
 import { isAdm } from "../middleware/isAdm";
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
-import { CreateProductController } from "../modules/product/useCase/product/create/createProductController";
-import { ListProductController } from "../modules/product/useCase/product/list/listProductController";
-import { ListIdProductController } from "../modules/product/useCase/product/listId/listIdProductController";
-import { ListNameProductController } from "../modules/product/useCase/product/listName/listNameProductController";
-import { UpdateProductController } from "../modules/product/useCase/product/update/updateProductController";
+import { CreateProductController } from "../modules/product/useCase/create/createProductController";
+import { ListProductController } from "../modules/product/useCase/list/listProductController";
+import { ListIdProductController } from "../modules/product/useCase/listId/listIdProductController";
+import { ListNameProductController } from "../modules/product/useCase/listName/listNameProductController";
+import { UpdateProductController } from "../modules/product/useCase/update/updateProductController";
 
 const productRoutes = Router();
 

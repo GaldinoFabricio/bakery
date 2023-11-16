@@ -1,10 +1,10 @@
 import { Level } from "@prisma/client";
 import { prismaClient } from "../../../../database";
-import { ICreateLevelDTO } from "../../dto/level/ICreateLevelDTO";
+import { ICreateLevelDTO } from "../../dto/ICreateLevelDTO";
 import { ILevelRepository } from "../ILevelRepository";
-import { IListIdLevelDTO } from "../../dto/level/IListIdLevelDTO";
-import { IListNameLevelDTO } from "../../dto/level/IListNameLevelDTO";
-import { IUpdateLevelDTO } from "../../dto/level/IUpdateLevelDTO";
+import { IListIdLevelDTO } from "../../dto/IListIdLevelDTO";
+import { IListNameLevelDTO } from "../../dto/IListNameLevelDTO";
+import { IUpdateLevelDTO } from "../../dto/IUpdateLevelDTO";
 
 class LevelRepository implements ILevelRepository {
 	async create(data: ICreateLevelDTO): Promise<void> {

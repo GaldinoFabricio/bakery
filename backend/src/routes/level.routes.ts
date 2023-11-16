@@ -3,9 +3,9 @@ import { Joi, Segments, celebrate } from "celebrate";
 
 import { isAdm } from "../middleware/isAdm";
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
-import { CreateLevelController } from "../modules/level/useCase/level/create/CreateLevelController";
-import { ListLevelController } from "../modules/level/useCase/level/List/ListLevelController";
-import { UpdateLevelController } from "../modules/level/useCase/level/update/UpdateLevelController";
+import { CreateLevelController } from "../modules/level/useCase/create/CreateLevelController";
+import { ListLevelController } from "../modules/level/useCase/List/ListLevelController";
+import { UpdateLevelController } from "../modules/level/useCase/update/UpdateLevelController";
 
 const levelRoutes = Router();
 
