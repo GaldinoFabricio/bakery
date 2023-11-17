@@ -6,10 +6,10 @@ import { UserRepository } from "../../modules/user/repository/implemantion/UserR
 import { IUserRepository } from "../../modules/user/repository/IUserRepository";
 import { ILevelRepository } from "../../modules/level/repositorie/ILevelRepository";
 import { LevelRepository } from "../../modules/level/repositorie/implemantions/LevelRepository";
-import { IGroupLevelRepository } from "../../modules/group-level/repositorie/IGroupLevelRepository";
-import { GroupLevelRepository } from "../../modules/group-level/repositorie/implemantions/GroupLevelRepository";
 import { ICartRepository } from "../../modules/cart/repositorie/ICartRepository";
 import { CartRepository } from "../../modules/cart/repositorie/implemantions/CartRepository";
+import { IGroupLevelRepository } from "../../modules/groupLevel/repositorie/IGroupLevelRepository";
+import { GroupLevelRepository } from "../../modules/groupLevel";
 
 container.registerSingleton<IProductRepository>(
 	"ProductRepository",

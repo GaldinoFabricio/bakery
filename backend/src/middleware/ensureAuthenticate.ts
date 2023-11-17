@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 import { UserRepository } from "../modules/user/repository/implemantion/UserRepository";
 import AppError from "../shared/errors/AppErrors";
 import { KEY_TOKEN } from "../shared/utils/environment";
-import { GroupLevelRepository } from "../modules/group-level/repositorie/implemantions/GroupLevelRepository";
+import { GroupLevelRepository } from "../modules/groupLevel";
 
 interface IPayload {
 	sub: string;
