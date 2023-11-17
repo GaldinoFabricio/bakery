@@ -16,10 +16,6 @@ class CreateProductUseCase {
 		name,
 		value,
 	}: ICreateProductDTO): Promise<void> {
-		if (!amount || !description || !name || !value) {
-			throw new AppError("Amount/Description/Name/Value not informed");
-		}
-
 		await this.productRepository.create({
 			amount,
 			description,

@@ -1,31 +1,19 @@
 import { Product } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 import AppError from "../../../../shared/errors/AppErrors";
-import { IUpdateProductDTO } from "../../dto/IUpdateProductDTO";
+import { IListNameProductDTO } from "../../dto/IListNameProductDTO";
 import { IProductRepository } from "../../repository/IProductRepository";
 
 @injectable()
-class UpdateProductUseCase {
+class GetNameProductUseCase {
 	constructor(
 		@inject("ProductRepository")
 		private productRepository: IProductRepository
 	) {}
 
-	async execute({
-		amount,
-		description,
-		id,
-		name,
-		value,
-	}: IUpdateProductDTO): Promise<Product> {
-		return await this.productRepository.update({
-			amount,
-			description,
-			id,
-			name,
-			value,
-		});
+	async execute({ name }: IListNameProductDTO): Promise<Product | null> {
+		return await this.productRepository.listName({ name });
 	}
 }
 
-export { UpdateProductUseCase };
+export { GetNameProductUseCase };

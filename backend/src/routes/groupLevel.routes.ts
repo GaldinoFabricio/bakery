@@ -2,21 +2,11 @@ import { Router } from "express";
 import { Joi, Segments, celebrate } from "celebrate";
 import { isAdm } from "../middleware/isAdm";
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
-import { CreateGroupLevelController } from "../modules/group-level/useCase/create/CreateGroupLevelController";
-import { ListGroupLevelController } from "../modules/group-level/useCase/list/ListGroupLevelController";
-import { ListLevelIdGroupLevelController } from "../modules/group-level/useCase/listLevelId/ListLevelIdGroupLevelController";
-import { ListUserIdGroupLevelController } from "../modules/group-level/useCase/listUserId/ListUserIdGroupLevelController";
-import { UpdateGroupLevelController } from "../modules/group-level/useCase/update/UpdateGroupLevelController";
-import { UpdateLevelGroupLevelController } from "../modules/group-level/useCase/updateLevel/UpdateLevelGroupLevelController";
+import { GroupLevelController } from "../modules/groupLevel";
 
 const groupLevelRoutes = Router();
 
-const createGroupLevelController = new CreateGroupLevelController();
-const listGroupLevelController = new ListGroupLevelController();
-const listLevelIdGroupLevelController = new ListLevelIdGroupLevelController();
-const listUserIdGroupLevelController = new ListUserIdGroupLevelController();
-const updateGroupLevelController = new UpdateGroupLevelController();
-const updateLevelGroupLevelController = new UpdateLevelGroupLevelController();
+const groupLevelController = new GroupLevelController();
 
 groupLevelRoutes.use(ensureAuthenticate);
 
@@ -33,7 +23,7 @@ groupLevelRoutes.post(
 			abortEarly: false,
 		}
 	),
-	createGroupLevelController.handle
+	groupLevelController.createGroupLeveL
 );
 
 groupLevelRoutes.get(
@@ -48,7 +38,7 @@ groupLevelRoutes.get(
 			abortEarly: false,
 		}
 	),
-	listLevelIdGroupLevelController.handle
+	groupLevelController.getLevelId
 );
 
 groupLevelRoutes.get(
@@ -63,10 +53,10 @@ groupLevelRoutes.get(
 			abortEarly: false,
 		}
 	),
-	listUserIdGroupLevelController.handle
+	groupLevelController.getUserId
 );
 
-groupLevelRoutes.get("/", isAdm, listGroupLevelController.handle);
+groupLevelRoutes.get("/", isAdm, groupLevelController.getAllGroupLevel);
 
 groupLevelRoutes.put(
 	"/level",
@@ -81,7 +71,7 @@ groupLevelRoutes.put(
 			abortEarly: false,
 		}
 	),
-	updateLevelGroupLevelController.handle
+	groupLevelController.updateLevel
 );
 
 groupLevelRoutes.put(
@@ -98,7 +88,7 @@ groupLevelRoutes.put(
 			abortEarly: false,
 		}
 	),
-	updateGroupLevelController.handle
+	groupLevelController.updateGroupLevel
 );
 
 export { groupLevelRoutes };

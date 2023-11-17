@@ -3,15 +3,11 @@ import { Joi, Segments, celebrate } from "celebrate";
 
 import { isAdm } from "../middleware/isAdm";
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
-import { CreateLevelController } from "../modules/level/useCase/create/CreateLevelController";
-import { ListLevelController } from "../modules/level/useCase/List/ListLevelController";
-import { UpdateLevelController } from "../modules/level/useCase/update/UpdateLevelController";
+import { LevelController } from "../modules/level";
 
 const levelRoutes = Router();
 
-const createLevelController = new CreateLevelController();
-const listLevelController = new ListLevelController();
-const updateLevelController = new UpdateLevelController();
+const levelController = new LevelController();
 
 levelRoutes.use(ensureAuthenticate);
 levelRoutes.use(isAdm);
@@ -28,10 +24,10 @@ levelRoutes.post(
 			abortEarly: false,
 		}
 	),
-	createLevelController.handle
+	levelController.createLevel
 );
 
-levelRoutes.get("/", listLevelController.handle);
+levelRoutes.get("/", levelController.getAll);
 
 levelRoutes.put(
 	"/",
@@ -46,7 +42,7 @@ levelRoutes.put(
 			abortEarly: false,
 		}
 	),
-	updateLevelController.handle
+	levelController.update
 );
 
 export { levelRoutes };

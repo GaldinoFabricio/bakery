@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { Joi, Segments, celebrate } from "celebrate";
 
-import { AuthenticateUserController } from "../modules/user/useCase/user/authenticate/authenticateUserController";
-import { CreateUserController } from "../modules/user/useCase/user/create/createUserController";
+import { AuthenticateUserController } from "../modules/user/useCase/authenticate/authenticateUserController";
+import { CreateUserController } from "../modules/user/useCase/create/createUserController";
 
 const sessionRoutes = Router();
 

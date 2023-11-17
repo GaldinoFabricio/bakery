@@ -3,19 +3,11 @@ import { Joi, Segments, celebrate } from "celebrate";
 
 import { isAdm } from "../middleware/isAdm";
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
-import { CreateProductController } from "../modules/product/useCase/create/createProductController";
-import { ListProductController } from "../modules/product/useCase/list/listProductController";
-import { ListIdProductController } from "../modules/product/useCase/listId/listIdProductController";
-import { ListNameProductController } from "../modules/product/useCase/listName/listNameProductController";
-import { UpdateProductController } from "../modules/product/useCase/update/updateProductController";
+import { ProductController } from "../modules/product";
 
 const productRoutes = Router();
 
-const createProductController = new CreateProductController();
-const listProductController = new ListProductController();
-const listIdProductController = new ListIdProductController();
-const listNameProductController = new ListNameProductController();
-const updateProductController = new UpdateProductController();
+const productController = new ProductController();
 
 productRoutes.post(
 	"/",
@@ -34,7 +26,7 @@ productRoutes.post(
 			abortEarly: false,
 		}
 	),
-	createProductController.handle
+	productController.createProduct
 );
 
 productRoutes.get(
@@ -49,7 +41,7 @@ productRoutes.get(
 			abortEarly: false,
 		}
 	),
-	listNameProductController.handle
+	productController.getName
 );
 
 productRoutes.get(
@@ -64,10 +56,10 @@ productRoutes.get(
 			abortEarly: false,
 		}
 	),
-	listIdProductController.handle
+	productController.getId
 );
 
-productRoutes.get("/", listProductController.handle);
+productRoutes.get("/", productController.getAll);
 
 productRoutes.put(
 	"/update",
@@ -87,7 +79,7 @@ productRoutes.put(
 			abortEarly: false,
 		}
 	),
-	updateProductController.handle
+	productController.updateProduct
 );
 
 export { productRoutes };

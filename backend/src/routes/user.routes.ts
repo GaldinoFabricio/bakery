@@ -3,29 +3,33 @@ import { Joi, Segments, celebrate } from "celebrate";
 
 import { isAdm } from "../middleware/isAdm";
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
-import { ListUserController } from "../modules/user/useCase/user/list/listUserController";
-import { ListEmailUserController } from "../modules/user/useCase/user/listEmail/listEmailUserController";
-import { ListIdUserController } from "../modules/user/useCase/user/listId/listIdUserController";
-import { ListNameUserController } from "../modules/user/useCase/user/listName/listNameUserController";
-import { UpdateUserController } from "../modules/user/useCase/user/update/updateUserController";
-import { ListMyUserController } from "../modules/user/useCase/user/listMy/ListMyUserController";
-import { CreateUserController } from "../modules/user/useCase/user/create/createUserController";
+import { UserController } from "../modules/user";
 
 const userRoutes = Router();
 
-const createUserController = new CreateUserController();
-const listUserController = new ListUserController();
-const listEmailUserController = new ListEmailUserController();
-const listIdUserController = new ListIdUserController();
-const listMyUserController = new ListMyUserController();
-const listNameUserController = new ListNameUserController();
-const updateUserController = new UpdateUserController();
-
-userRoutes.use(ensureAuthenticate);
+const userController = new UserController();
 
 userRoutes.post(
 	"/",
-	isAdm,
+	celebrate(
+		{
+			[Segments.BODY]: Joi.object({
+				email: Joi.string().email().required(),
+				password: Joi.string()
+					.pattern(new RegExp("^(?=.*[!@#$%^&*])"))
+					.min(8)
+					.required(),
+			}),
+		},
+		{
+			abortEarly: false,
+		}
+	),
+	userController.authenticateUser
+);
+
+userRoutes.post(
+	"/create",
 	celebrate(
 		{
 			[Segments.BODY]: Joi.object({
@@ -42,28 +46,15 @@ userRoutes.post(
 			abortEarly: false,
 		}
 	),
-	createUserController.handle
+	userController.createUser
 );
 
-userRoutes.get("/my", listMyUserController.handle);
-
-userRoutes.get(
-	"/email",
-	celebrate(
-		{
-			[Segments.BODY]: Joi.object({
-				email: Joi.string().email().required(),
-			}),
-		},
-		{
-			abortEarly: false,
-		}
-	),
-	listEmailUserController.handle
-);
+userRoutes.get("/my", userController.getMy);
 
 userRoutes.get(
 	"/name/:name",
+	ensureAuthenticate,
+	isAdm,
 	celebrate(
 		{
 			[Segments.PARAMS]: Joi.object({
@@ -74,11 +65,12 @@ userRoutes.get(
 			abortEarly: false,
 		}
 	),
-	listNameUserController.handle
+	userController.getName
 );
 
 userRoutes.get(
 	"/id/:id",
+	ensureAuthenticate,
 	celebrate(
 		{
 			[Segments.PARAMS]: Joi.object({
@@ -89,13 +81,14 @@ userRoutes.get(
 			abortEarly: false,
 		}
 	),
-	listIdUserController.handle
+	userController.getId
 );
 
-userRoutes.get("/", isAdm, listUserController.handle);
+userRoutes.get("/", isAdm, userController.getAll);
 
 userRoutes.put(
 	"/",
+	ensureAuthenticate,
 	celebrate(
 		{
 			[Segments.BODY]: Joi.object({
@@ -112,7 +105,7 @@ userRoutes.put(
 			abortEarly: false,
 		}
 	),
-	updateUserController.handle
+	userController.update
 );
 
 export { userRoutes };

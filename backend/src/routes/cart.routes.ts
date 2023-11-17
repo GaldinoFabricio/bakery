@@ -3,19 +3,11 @@ import { Joi, Segments, celebrate } from "celebrate";
 
 import { ensureAuthenticate } from "../middleware/ensureAuthenticate";
 import { isAdm } from "../middleware/isAdm";
-import { CreateCartController } from "../modules/cart/useCase/create/createCartController";
-import { ListCartController } from "../modules/cart/useCase/list/listCartController";
-import { ListIdCartController } from "../modules/cart/useCase/listId/listIdCartController";
-import { ListMyCartController } from "../modules/cart/useCase/listMy/ListMyCartController";
-import { ListUserIdCartController } from "../modules/cart/useCase/listUserId/listUserIdCartController";
+import { CartController } from "../modules/cart";
 
 const cartRoutes = Router();
 
-const createCartController = new CreateCartController();
-const listCartController = new ListCartController();
-const listIdCartController = new ListIdCartController();
-const listMyCartController = new ListMyCartController();
-const listUserIdController = new ListUserIdCartController();
+const cartController = new CartController();
 
 cartRoutes.use(ensureAuthenticate);
 
@@ -34,10 +26,10 @@ cartRoutes.post(
 			abortEarly: false,
 		}
 	),
-	createCartController.handle
+	cartController.createCart
 );
 
-cartRoutes.get("/my", listMyCartController.handle);
+cartRoutes.get("/my", cartController.getMy);
 
 cartRoutes.get(
 	"/user/:user_id",
@@ -52,7 +44,7 @@ cartRoutes.get(
 			abortEarly: false,
 		}
 	),
-	listUserIdController.handle
+	cartController.getUserId
 );
 
 cartRoutes.get(
@@ -68,9 +60,9 @@ cartRoutes.get(
 			abortEarly: false,
 		}
 	),
-	listIdCartController.handle
+	cartController.getId
 );
 
-cartRoutes.get("/", isAdm, listCartController.handle);
+cartRoutes.get("/", isAdm, cartController.getAll);
 
 export { cartRoutes };
