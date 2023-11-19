@@ -9,45 +9,7 @@ const userRoutes = Router();
 
 const userController = new UserController();
 
-userRoutes.post(
-	"/",
-	celebrate(
-		{
-			[Segments.BODY]: Joi.object({
-				email: Joi.string().email().required(),
-				password: Joi.string()
-					.pattern(new RegExp("^(?=.*[!@#$%^&*])"))
-					.min(8)
-					.required(),
-			}),
-		},
-		{
-			abortEarly: false,
-		}
-	),
-	userController.authenticateUser
-);
-
-userRoutes.post(
-	"/create",
-	celebrate(
-		{
-			[Segments.BODY]: Joi.object({
-				name: Joi.string().required(),
-				email: Joi.string().email().required(),
-				password: Joi.string()
-					.pattern(new RegExp("^(?=.*[!@#$%^&*])"))
-					.min(8)
-					.required(),
-				is_adm: Joi.boolean(),
-			}),
-		},
-		{
-			abortEarly: false,
-		}
-	),
-	userController.createUser
-);
+userRoutes.use(ensureAuthenticate);
 
 userRoutes.get("/my", userController.getMy);
 
@@ -106,6 +68,26 @@ userRoutes.put(
 		}
 	),
 	userController.update
+);
+
+userRoutes.put(
+	"/password",
+	ensureAuthenticate,
+	celebrate(
+		{
+			[Segments.BODY]: Joi.object({
+				id: Joi.number().required(),
+				password: Joi.string()
+					.pattern(new RegExp("^(?=.*[!@#$%^&*])"))
+					.min(8)
+					.required(),
+			}),
+		},
+		{
+			abortEarly: false,
+		}
+	),
+	userController.updatePassword
 );
 
 export { userRoutes };

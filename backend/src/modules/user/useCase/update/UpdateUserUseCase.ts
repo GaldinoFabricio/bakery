@@ -2,7 +2,7 @@ import { User } from "@prisma/client";
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 import AppError from "../../../../shared/errors/AppErrors";
-import { IUpdateUserDTO } from "../../dto/user/IUpdateUserDTO";
+import { IUpdateUserDTO } from "../../dto/IUpdateUserDTO";
 import { IUserRepository } from "../../repository/IUserRepository";
 
 @injectable()

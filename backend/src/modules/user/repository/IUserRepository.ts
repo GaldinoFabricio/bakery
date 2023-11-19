@@ -1,22 +1,25 @@
 import { User } from "@prisma/client";
-import { ICreateUserDTO } from "../dto/user/ICreateUserDTO";
-import { IListEmailUserDTO } from "../dto/user/IListEmailUserDTO";
-import { IListIdUserDTO } from "../dto/user/IListIdUserDTO";
-import { IListNameUserDTO } from "../dto/user/IListNameUserDTO";
-import { IUpdateUserDTO } from "../dto/user/IUpdateUserDTO";
+import { ICreateUserDTO } from "../dto/ICreateUserDTO";
+import { IGetEmailUserDTO } from "../dto/IGetEmailUserDTO";
+import { IGetIdUserDTO } from "../dto/IGetIdUserDTO";
+import { IGetNameUserDTO } from "../dto/IGetNameUserDTO";
+import { IUpdateUserDTO } from "../dto/IUpdateUserDTO";
+import { IUpdatePasswordUserDTO } from "../dto/IUpdatePasswordUserDTO";
 
 interface IUserRepository {
-  create(data: ICreateUserDTO): Promise<void>;
+	create(data: ICreateUserDTO): Promise<void>;
 
-  list(): Promise<User[]>;
+	getAll(): Promise<User[]>;
 
-  listEmail({ email }: IListEmailUserDTO): Promise<User | null>;
+	getEmail({ email }: IGetEmailUserDTO): Promise<User | null>;
 
-  listName({ name }: IListNameUserDTO): Promise<User | null>;
+	getName({ name }: IGetNameUserDTO): Promise<User | null>;
 
-  listId({ id }:IListIdUserDTO): Promise<User | null>;
+	getId({ id }: IGetIdUserDTO): Promise<User | null>;
 
-  update(data: IUpdateUserDTO): Promise<User>;
+	update(data: IUpdateUserDTO): Promise<User>;
+
+	updatePassword({ id, password }: IUpdatePasswordUserDTO): Promise<void>;
 }
 
-export { IUserRepository }
+export { IUserRepository };

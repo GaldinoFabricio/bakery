@@ -7,6 +7,7 @@ import { GetIdUserUseCase } from "../useCase/getId/GetIdUserUseCase";
 import { GetMyUserUseCase } from "../useCase/getMy/GetMyUserUseCase";
 import { UpdateUserUseCase } from "../useCase/update/UpdateUserUseCase";
 import { GetNameUserUseCase } from "../useCase/getName/GetNameUserUseCase";
+import { UpdatePasswordUserUseCase } from "../useCase/updatePassword/UpdatePasswordUseCase";
 
 class UserController {
 	async authenticateUser(
@@ -89,6 +90,26 @@ class UserController {
 			name,
 			password,
 			is_adm,
+		});
+
+		return response.status(201).send(data);
+	}
+
+	async updatePassword(
+		request: Request<any, any, { id: string; password: string }>,
+		response: Response
+	): Promise<Response> {
+		const { password } = request.body;
+
+		const { id } = request.user;
+
+		const updatePasswordUserUseCase = container.resolve(
+			UpdatePasswordUserUseCase
+		);
+
+		const data = await updatePasswordUserUseCase.execute({
+			id,
+			password,
 		});
 
 		return response.status(201).send(data);

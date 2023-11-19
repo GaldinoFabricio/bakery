@@ -1,81 +1,91 @@
 import { User } from "@prisma/client";
 import { prismaClient } from "../../../../database";
-import { ICreateUserDTO } from "../../dto/user/ICreateUserDTO";
-import { IListEmailUserDTO } from "../../dto/user/IListEmailUserDTO";
-import { IListIdUserDTO } from "../../dto/user/IListIdUserDTO";
-import { IListNameUserDTO } from "../../dto/user/IListNameUserDTO";
-import { IUpdateUserDTO } from "../../dto/user/IUpdateUserDTO";
+import { ICreateUserDTO } from "../../dto/ICreateUserDTO";
+import { IGetEmailUserDTO } from "../../dto/IGetEmailUserDTO";
+import { IGetIdUserDTO } from "../../dto/IGetIdUserDTO";
+import { IGetNameUserDTO } from "../../dto/IGetNameUserDTO";
+import { IUpdateUserDTO } from "../../dto/IUpdateUserDTO";
 import { IUserRepository } from "../IUserRepository";
+import { IUpdatePasswordUserDTO } from "../../dto/IUpdatePasswordUserDTO";
 
 class UserRepository implements IUserRepository {
-  private repository;
+	async create({
+		email,
+		name,
+		password,
+		is_adm,
+	}: ICreateUserDTO): Promise<void> {
+		await prismaClient.user.create({
+			data: {
+				email,
+				name,
+				password,
+				is_adm,
+			},
+		});
+	}
 
-  constructor(){
-    this.repository = prismaClient.user;
-  }
+	async getAll(): Promise<User[]> {
+		return await prismaClient.user.findMany();
+	}
 
-  async create({email,name,password,is_adm}: ICreateUserDTO): Promise<void> {    
-    await this.repository.create({
-      data: {
-        email,
-        name,
-        password,
-        is_adm
-      },
-    });
-  }
+	async getEmail({ email }: IGetEmailUserDTO): Promise<User | null> {
+		return await prismaClient.user.findFirst({
+			where: {
+				email,
+			},
+		});
+	}
 
-  async list(): Promise<User[]> {
-    const data = await this.repository.findMany();
+	async getId({ id }: IGetIdUserDTO): Promise<User | null> {
+		return await prismaClient.user.findFirst({
+			where: {
+				id,
+			},
+		});
+	}
 
-    return data;
-  }
+	async getName({ name }: IGetNameUserDTO): Promise<User | null> {
+		return await prismaClient.user.findFirst({
+			where: {
+				name,
+			},
+		});
+	}
 
-  async listId({ id }: IListIdUserDTO): Promise<User | null> {
-    const data = await this.repository.findFirst({
-      where: {
-        id,
-      },
-    });
+	async update({
+		email,
+		id,
+		name,
+		password,
+		is_adm,
+	}: IUpdateUserDTO): Promise<User> {
+		return await prismaClient.user.update({
+			where: {
+				id,
+			},
+			data: {
+				email,
+				name,
+				password,
+				is_adm,
+			},
+		});
+	}
 
-    return data;
-  }
-
-  async listEmail({ email }: IListEmailUserDTO): Promise<User | null> {
-    const data = await this.repository.findFirst({
-      where: {
-        email,
-      },
-    });
-
-    return data;
-  }
-
-  async listName({ name }: IListNameUserDTO): Promise<User | null> {
-    const data = await this.repository.findFirst({
-      where: {
-        name,
-      },
-    });
-
-    return data;
-  }
-
-  async update({email,id,name,password,is_adm}: IUpdateUserDTO): Promise<User> {
-    const data = await this.repository.update({
-      where: {
-        id,
-      },
-      data: {
-        email,
-        name,
-        password,
-        is_adm
-      },
-    });
-
-    return data;
-  }
+	async updatePassword({
+		id,
+		password,
+	}: IUpdatePasswordUserDTO): Promise<void> {
+		await prismaClient.user.update({
+			where: {
+				id,
+			},
+			data: {
+				password,
+			},
+		});
+	}
 }
 
-export { UserRepository }
+export { UserRepository };

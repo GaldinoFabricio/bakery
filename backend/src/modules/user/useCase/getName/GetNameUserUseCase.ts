@@ -1,8 +1,7 @@
 import { User } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
-import AppError from "../../../../shared/errors/AppErrors";
 import { IUserRepository } from "../../repository/IUserRepository";
-import { IListNameUserDTO } from "../../dto/user/IListNameUserDTO";
+import { IGetNameUserDTO } from "../../dto/IGetNameUserDTO";
 
 @injectable()
 class GetNameUserUseCase {
@@ -11,8 +10,8 @@ class GetNameUserUseCase {
 		private userRepository: IUserRepository
 	) {}
 
-	async execute({ name }: IListNameUserDTO): Promise<User | null> {
-		return await this.userRepository.listName({ name });
+	async execute({ name }: IGetNameUserDTO): Promise<User | null> {
+		return await this.userRepository.getName({ name });
 	}
 }
 
